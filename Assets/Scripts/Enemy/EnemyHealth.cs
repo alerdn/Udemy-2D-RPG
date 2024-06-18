@@ -5,13 +5,16 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int _maxHealth = 3;
+        [SerializeField] private float _knockedbackThrust = 10f;
 
     private int _currentHealth;
     private Knockback _knockback;
+    private Flash _flash;
 
     private void Awake()
     {
         _knockback = GetComponent<Knockback>();
+        _flash = GetComponent<Flash>();
     }
 
     private void Start()
@@ -23,16 +26,22 @@ public class EnemyHealth : MonoBehaviour
     {
         _currentHealth = Mathf.Max(0, _currentHealth - damage);
 
-        _knockback.GetKnockedBack(PlayerController.Instance.transform, 15f);
+        _knockback.GetKnockedBack(PlayerController.Instance.transform, _knockedbackThrust);
+        StartCoroutine(_flash.FlashRoutine());
 
-        if (_currentHealth == 0)
-        {
-            OnDeath();
-        }
+        StartCoroutine(DetectDeathRoutine());
     }
 
-    public void OnDeath()
+    private IEnumerator DetectDeathRoutine()
     {
+        yield return new WaitForSeconds(_flash.RestoreDefaultMaterialTime);
+        DetectDeath();
+    }
+
+    public void DetectDeath()
+    {
+        if (_currentHealth != 0) return;
+
         Destroy(gameObject);
     }
 }
