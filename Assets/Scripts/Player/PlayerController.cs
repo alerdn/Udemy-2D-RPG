@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+
     [SerializeField] private float _moveSpeed = 1f;
 
     public PlayerControls PlayerControls { get; private set; }
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         PlayerControls = new PlayerControls();
         RB = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();

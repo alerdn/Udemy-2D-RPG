@@ -7,12 +7,14 @@ public class EnemyPathfinding : MonoBehaviour
     [SerializeField] private float _moveSpeed = 1f;
 
     public Rigidbody2D RB { get; private set; }
+    public Knockback Knockback { get; private set; }
 
     private Vector2 _movement;
 
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
+        Knockback = GetComponent<Knockback>();
     }
 
     private void FixedUpdate()
@@ -27,6 +29,8 @@ public class EnemyPathfinding : MonoBehaviour
 
     public void Move()
     {
+        if (Knockback.IsGettingKnockedback) return;
+
         RB.MovePosition(RB.position + _movement * (_moveSpeed * Time.fixedDeltaTime));
     }
 }
