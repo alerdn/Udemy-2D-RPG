@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1186261531864838681}
   - component: {fileID: 1980049518348055684}
   - component: {fileID: 4592608844824416361}
+  - component: {fileID: 8061941766704440958}
   m_Layer: 0
   m_Name: PFB_Slime
   m_TagString: Untagged
@@ -176,6 +177,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 1
+--- !u!114 &8061941766704440958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4148570700951181584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ea99337bba224479691e176c29e28b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7453576162697925282
 GameObject:
   m_ObjectHideFlags: 0

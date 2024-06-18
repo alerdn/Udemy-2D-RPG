@@ -6,6 +6,7 @@ public class Sword : MonoBehaviour
 {
     [SerializeField] private AnimationEffect _slashAnimationPrefab;
     [SerializeField] private Transform _slashAnimationSpawnPoint;
+    [SerializeField] private Transform _weaponCollider;
 
     private PlayerController _playerController;
     private ActiveWeapon _activeWeapon;
@@ -47,15 +48,21 @@ public class Sword : MonoBehaviour
             _slashEffect.Renderer.flipX = true;
         }
 
+        _weaponCollider.gameObject.SetActive(true);
         _animator.SetTrigger("Attack");
     }
 
-    public void SwingUpFlipAnim()
+    public void DoneAttackingAnimEvent()
+    {
+        _weaponCollider.gameObject.SetActive(false);
+    }
+
+    public void SwingUpFlipAnimEvent()
     {
         _slashEffect?.ChangeRotation(new Vector3(180f, 0f, 0f));
     }
 
-    public void SwingDownFlipAnim()
+    public void SwingDownFlipAnimEvent()
     {
         _slashEffect?.ChangeRotation(new Vector3(0f, 0f, 0f));
     }
@@ -70,10 +77,12 @@ public class Sword : MonoBehaviour
         if (mousePosition.x < playerScreenPoint.x)
         {
             _activeWeapon.transform.rotation = Quaternion.Euler(0f, -180f, angle);
+            _weaponCollider.transform.rotation = Quaternion.Euler(0f, -180f, 0f);
         }
         else
         {
             _activeWeapon.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            _weaponCollider.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
     }
 }
