@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     public PlayerControls PlayerControls { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public Animator Animator { get; private set; }
-    public SpriteRenderer Renderer {get; private set;}
+    public SpriteRenderer Renderer { get; private set; }
+    public bool IsFacingLeft { get; private set; } = false;
 
     private Vector2 _movement;
 
@@ -49,10 +50,12 @@ public class PlayerController : MonoBehaviour
         RB.MovePosition(RB.position + _movement * (_moveSpeed * Time.fixedDeltaTime));
     }
 
-    private void AdjustFacingDirection() {
+    private void AdjustFacingDirection()
+    {
         Vector2 mousePosition = PlayerControls.Player.Look.ReadValue<Vector2>();
-        Vector2 playerPosition = Camera.main.WorldToScreenPoint(RB.position);
+        Vector2 playerScreenPoint = Camera.main.WorldToScreenPoint(RB.position);
 
-        Renderer.flipX = mousePosition.x < playerPosition.x;
+        IsFacingLeft = mousePosition.x < playerScreenPoint.x;
+        Renderer.flipX = IsFacingLeft;
     }
 }
