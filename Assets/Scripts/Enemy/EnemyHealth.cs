@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int _maxHealth = 3;
-        [SerializeField] private float _knockedbackThrust = 10f;
+    [SerializeField] private float _knockedbackThrust = 10f;
+    [SerializeField] private ParticleSystem _deathVfx;
 
     private int _currentHealth;
     private Knockback _knockback;
@@ -42,6 +43,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (_currentHealth != 0) return;
 
+        Instantiate(_deathVfx, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

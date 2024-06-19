@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8061941766704440958}
   - component: {fileID: 8988555167542744043}
   - component: {fileID: 3485045777191392333}
+  - component: {fileID: 365157724398951169}
   m_Layer: 0
   m_Name: PFB_Slime
   m_TagString: Untagged
@@ -192,6 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 3
+  _knockedbackThrust: 10
+  _deathVfx: {fileID: 3158286388908344678, guid: 90e1a8c47987df14f8c5d02c2f7880ce, type: 3}
 --- !u!114 &8988555167542744043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _knockbackTime: 0.2
-  _thrust: 10
 --- !u!114 &3485045777191392333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +222,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <RestoreDefaultMaterialTime>k__BackingField: 0.1
   _whiteMaterial: {fileID: 2100000, guid: 0a87c7e9afe3013479ae0be1d955cad0, type: 2}
+--- !u!210 &365157724398951169
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4148570700951181584}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &7453576162697925282
 GameObject:
   m_ObjectHideFlags: 0
