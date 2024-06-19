@@ -1937,6 +1937,7 @@ MonoBehaviour:
   _slashAnimationPrefab: {fileID: 2301977204348525251, guid: f918cf66a7de847418ba5b1a1b7066f6, type: 3}
   _slashAnimationSpawnPoint: {fileID: 983447916}
   _weaponCollider: {fileID: 1398900165}
+  _attackCooldown: 0.5
 --- !u!1 &1398900164
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 public class Sword : MonoBehaviour
 {
     [SerializeField] private AnimationEffect _slashAnimationPrefab;
     [SerializeField] private Transform _slashAnimationSpawnPoint;
     [SerializeField] private Transform _weaponCollider;
+    [SerializeField] private float _attackCooldown = .5f;
 
     private PlayerController _playerController;
     private ActiveWeapon _activeWeapon;
@@ -14,6 +16,8 @@ public class Sword : MonoBehaviour
 
     private PlayerControls _controls;
     private AnimationEffect _slashEffect;
+    private Coroutine _attackRoutine;
+    private bool _isAttacking;
 
     private void Awake()
     {
@@ -22,7 +26,6 @@ public class Sword : MonoBehaviour
         _animator = GetComponent<Animator>();
 
         _controls = new PlayerControls();
-
     }
 
     private void OnEnable()
@@ -32,7 +35,14 @@ public class Sword : MonoBehaviour
 
     private void Start()
     {
-        _controls.Combat.Attack.started += _ => Attack();
+        _controls.Combat.Attack.started += StartAttacking;
+        _controls.Combat.Attack.canceled += StopAttacking;
+    }
+
+    private void OnDestroy()
+    {
+        _controls.Combat.Attack.started -= StartAttacking;
+        _controls.Combat.Attack.canceled -= StopAttacking;
     }
 
     private void Update()
@@ -40,16 +50,34 @@ public class Sword : MonoBehaviour
         MouseFollowWithOffset();
     }
 
-    private void Attack()
+    private IEnumerator AttackRoutine()
     {
-        _slashEffect = Instantiate(_slashAnimationPrefab, _slashAnimationSpawnPoint);
-        if (_playerController.IsFacingLeft)
+        while (_isAttacking)
         {
-            _slashEffect.Renderer.flipX = true;
+            _slashEffect = Instantiate(_slashAnimationPrefab, _slashAnimationSpawnPoint);
+            if (_playerController.IsFacingLeft)
+            {
+                _slashEffect.Renderer.flipX = true;
+            }
+
+            _weaponCollider.gameObject.SetActive(true);
+            _animator.SetTrigger("Attack");
+
+            yield return new WaitForSeconds(_attackCooldown);
         }
 
-        _weaponCollider.gameObject.SetActive(true);
-        _animator.SetTrigger("Attack");
+        _attackRoutine = null;
+    }
+
+    private void StartAttacking(CallbackContext context)
+    {
+        _isAttacking = true;
+        _attackRoutine ??= StartCoroutine(AttackRoutine());
+    }
+
+    private void StopAttacking(CallbackContext context)
+    {
+        _isAttacking = false;
     }
 
     public void DoneAttackingAnimEvent()
